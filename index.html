@@ -192,6 +192,7 @@
         <div class="fg">
           <div class="f"><label>Tipo de sangre</label><select id="fsg"><option value="">Desconocido</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
           <div class="f"><label>Estado</label><select id="fest"><option>Activo</option><option>En seguimiento</option><option>Alta</option><option>Inactivo</option></select></div>
+          <div class="f"><label>Tipo de miembro *</label><select id="ftm"><option value="">Seleccionar</option><option>Miembro</option><option>Visita</option><option>Bautizado</option></select></div>
           <div class="f ff"><label>Alergias conocidas</label><input type="text" id="fal" placeholder="Ej: Penicilina, Polen, Látex (separadas por coma)"/></div>
           <div class="f ff"><label>Antecedentes / Enfermedades crónicas</label><textarea id="fant" rows="3" placeholder="Diabetes tipo 2, hipertensión arterial..."></textarea></div>
           <div class="f ff"><label>Medicamentos actuales</label><textarea id="fmed" rows="2" placeholder="Metformina 850mg, Losartán 50mg..."></textarea></div>
@@ -265,7 +266,7 @@ function doLogin(){
   const p=document.getElementById('lp').value;
   const f=getUsers().find(x=>x.user===u&&x.pass===p);
   if(f){CU=f;try{sessionStorage.setItem('cs',JSON.stringify(f))}catch(e){}
-    document.getElementById('le').classList.add('hidden');startApp();
+    document.getElementById('le').classList.add('hidden');startApp();logSession(f);
   }else{document.getElementById('le').classList.remove('hidden')}
 }
 document.getElementById('lp').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
@@ -339,7 +340,7 @@ function renderPAC(list){
       <div class="cp">
         ${p.edad?`<span class="p pg2">${p.edad}</span>`:''}
         ${p.sangre?`<span class="p pb">${p.sangre}</span>`:''}
-        <span class="p ${ep}">${p.estado||'Activo'}</span>${al}
+        <span class="p ${ep}">${p.estado||'Activo'}</span>${al}${tmbadge}
       </div></div>`;
   }).join('');
 }
@@ -355,7 +356,7 @@ async function guardarPaciente(){
   req.forEach(([id])=>{const el=document.getElementById(id);if(!el.value.trim()){el.style.borderColor='var(--err)';ok=false}else el.style.borderColor='';});
   if(!ok){showErr('ferr','Completa los campos obligatorios (*)');return}
   const id='P-'+Date.now().toString(36).toUpperCase();
-  const data={action:'addPaciente',id,nombre:gv('fn'),nacimiento:gv('fnac'),edad:gv('fed'),sexo:gv('fsx'),cedula:gv('fid'),telefono:gv('ftel'),telEmergencia:gv('fem'),email:gv('femail'),direccion:gv('fdir'),sangre:gv('fsg'),estado:gv('fest'),alergias:gv('fal'),antecedentes:gv('fant'),medicamentos:gv('fmed'),fechaRegistro:new Date().toLocaleString('es-MX')};
+  const data={action:'addPaciente',id,nombre:gv('fn'),nacimiento:gv('fnac'),edad:gv('fed'),sexo:gv('fsx'),cedula:gv('fid'),telefono:gv('ftel'),telEmergencia:gv('fem'),email:gv('femail'),direccion:gv('fdir'),sangre:gv('fsg'),estado:gv('fest'),tipoMiembro:gv('ftm'),alergias:gv('fal'),antecedentes:gv('fant'),medicamentos:gv('fmed'),fechaRegistro:new Date().toLocaleString('es-MX')};
   try{
     document.getElementById('ferr').classList.add('hidden');
     await apiPost(data);
@@ -366,7 +367,7 @@ async function guardarPaciente(){
 
 function limpiarF(){
   ['fn','fnac','fed','fid','ftel','fem','femail','fdir','fal','fant','fmed'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('fsx').value='';document.getElementById('fsg').value='';document.getElementById('fest').value='Activo';
+  document.getElementById('fsx').value='';document.getElementById('fsg').value='';document.getElementById('fest').value='Activo';document.getElementById('ftm').value='';
 }
 
 function calcEdad(){
@@ -393,6 +394,7 @@ async function openExp(id){
           ${p.sangre?`<span class="p pb">${p.sangre}</span>`:''}
           <span class="p ${ep}">${p.estado||'Activo'}</span>
           ${p.sexo?`<span class="p pg2">${p.sexo}</span>`:''}
+          ${p.tipoMiembro?`<span class="p ${{Miembro:'pg3',Visita:'pb',Bautizado:'pa'}[p.tipoMiembro]||'pg2'}">${p.tipoMiembro}</span>`:''}
         </div>
         <div style="font-size:13px;color:var(--text2)">
           ${p.cedula?`<strong>ID:</strong> ${p.cedula}`:''} ${p.telefono?`&nbsp;·&nbsp;${p.telefono}`:''} ${p.email?`&nbsp;·&nbsp;${p.email}`:''}
@@ -466,6 +468,19 @@ function addUser(){
   ['unn','unu','unp','une'].forEach(id=>document.getElementById(id).value='');
 }
 
+async function logSession(user){
+  try{
+    await apiPost({
+      action:'logSession',
+      usuario:user.user,
+      nombre:user.nombre,
+      rol:user.rol,
+      especialidad:user.especialidad||'',
+      fecha:new Date().toLocaleString('es-MX'),
+      dispositivo:navigator.userAgent.substring(0,80)
+    });
+  }catch(e){}
+}
 function gv(id){return document.getElementById(id).value}
 function showErr(id,msg){const el=document.getElementById(id);el.textContent=msg;el.classList.remove('hidden');setTimeout(()=>el.classList.add('hidden'),5000)}
 </script>
