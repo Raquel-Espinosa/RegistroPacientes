@@ -298,9 +298,7 @@ var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx70xrmc9PUa9SLgklAIrX
 var USERS_DEFAULT = [
   {user:'admin',     pass:'1234', nombre:'Administrador',     rol:'admin',     especialidad:''},
   {user:'doctor',    pass:'1234', nombre:'Dr. Carlos Méndez', rol:'doctor',    especialidad:'Medicina General'},
-  {user:'recepcion', pass:'1234', nombre:'Laura Torres',      rol:'recepcion', especialidad:''},
-  {user:'Rebeca', pass:'rebe', nombre:'Rebeca', rol:'doctor', especialidad:'Psicologia' }
-  
+  {user:'recepcion', pass:'1234', nombre:'Laura Torres',      rol:'recepcion', especialidad:''}
 ];
 
 // ══════════════════════════════════════════
@@ -313,14 +311,32 @@ var pacienteId  = null;
 // ══════════════════════════════════════════
 //  USUARIOS (localStorage)
 // ══════════════════════════════════════════
+// Caché local de usuarios (se carga desde Sheets al iniciar)
+var usersCache = null;
+
 function getUsers() {
-  try {
-    var s = localStorage.getItem('app_users');
-    return s ? JSON.parse(s) : USERS_DEFAULT;
-  } catch(e) { return USERS_DEFAULT; }
+  return usersCache || USERS_DEFAULT;
 }
-function saveUsers(u) {
-  try { localStorage.setItem('app_users', JSON.stringify(u)); } catch(e) {}
+
+function cargarUsuarios(callback) {
+  api({ action: 'getUsuarios' })
+    .then(function(data) {
+      if (data.usuarios && data.usuarios.length) {
+        usersCache = data.usuarios;
+      } else {
+        // Primera vez: subir usuarios por defecto a Sheets
+        usersCache = USERS_DEFAULT;
+        USERS_DEFAULT.forEach(function(u) {
+          api({ action:'addUsuario', nombre:u.nombre, user:u.user,
+                pass:u.pass, rol:u.rol, especialidad:u.especialidad||'' }).catch(function(){});
+        });
+      }
+      if (callback) callback();
+    })
+    .catch(function() {
+      usersCache = USERS_DEFAULT;
+      if (callback) callback();
+    });
 }
 
 // ══════════════════════════════════════════
@@ -366,20 +382,46 @@ function initials(name) {
 function doLogin() {
   var u = $('inp-user').value.trim();
   var p = $('inp-pass').value;
-  var found = getUsers().filter(function(x) { return x.user === u && x.pass === p; })[0];
-  if (found) {
-    currentUser = found;
-    try { sessionStorage.setItem('session', JSON.stringify(found)); } catch(e) {}
-    hide('login-err');
-    startApp();
-    // log session sin bloquear
-    api({ action:'logSession', usuario:found.user, nombre:found.nombre,
-          rol:found.rol, especialidad:found.especialidad||'',
-          fecha:new Date().toLocaleString('es-MX'),
-          dispositivo:navigator.userAgent.substring(0,80) }).catch(function(){});
-  } else {
-    show('login-err');
-  }
+  $('btn-login').textContent = 'Verificando...';
+  $('btn-login').disabled = true;
+  // Siempre cargar usuarios frescos desde Sheets al hacer login
+  api({ action: 'getUsuarios' })
+    .then(function(data) {
+      if (data.usuarios && data.usuarios.length) {
+        usersCache = data.usuarios;
+      } else {
+        usersCache = USERS_DEFAULT;
+      }
+      var found = usersCache.filter(function(x) { return x.user === u && x.pass === p; })[0];
+      $('btn-login').textContent = 'Ingresar';
+      $('btn-login').disabled = false;
+      if (found) {
+        currentUser = found;
+        try { sessionStorage.setItem('session', JSON.stringify(found)); } catch(e) {}
+        hide('login-err');
+        startApp();
+        api({ action:'logSession', usuario:found.user, nombre:found.nombre,
+              rol:found.rol, especialidad:found.especialidad||'',
+              fecha:new Date().toLocaleString('es-MX'),
+              dispositivo:navigator.userAgent.substring(0,80) }).catch(function(){});
+      } else {
+        show('login-err');
+      }
+    })
+    .catch(function() {
+      // Si falla la red, intentar con caché local
+      $('btn-login').textContent = 'Ingresar';
+      $('btn-login').disabled = false;
+      var found = getUsers().filter(function(x) { return x.user === u && x.pass === p; })[0];
+      if (found) {
+        currentUser = found;
+        try { sessionStorage.setItem('session', JSON.stringify(found)); } catch(e) {}
+        hide('login-err');
+        startApp();
+      } else {
+        show('login-err');
+      }
+    });
 }
 
 $('btn-login').addEventListener('click', doLogin);
@@ -403,6 +445,8 @@ $('btn-logout').addEventListener('click', doLogout);
 //  INICIAR APP
 // ══════════════════════════════════════════
 function startApp() {
+  // Cargar usuarios desde Sheets (para que se vean en todas las PCs)
+  cargarUsuarios(function() { renderUsuarios(); });
   hide('pg-login');
   show('pg-app');
   $('sb-avatar').textContent = initials(currentUser.nombre);
@@ -678,10 +722,19 @@ $('btn-add-user').addEventListener('click', function() {
   if (!n||!u||!p) { alert('Completa nombre, usuario y contraseña'); return; }
   var users = getUsers();
   if (users.filter(function(x){return x.user===u;}).length) { alert('Ese usuario ya existe'); return; }
-  users.push({nombre:n,user:u,pass:p,rol:r,especialidad:e});
-  saveUsers(users);
-  renderUsuarios();
-  ['u-nombre','u-user','u-pass','u-esp'].forEach(function(id){setVal(id,'');});
+  // Guardar en Sheets
+  api({ action:'addUsuario', nombre:n, user:u, pass:p, rol:r, especialidad:e||'' })
+    .then(function(res) {
+      if (res.ok) {
+        // Actualizar caché local
+        usersCache = users.concat([{nombre:n,user:u,pass:p,rol:r,especialidad:e}]);
+        renderUsuarios();
+        ['u-nombre','u-user','u-pass','u-esp'].forEach(function(id){setVal(id,'');});
+      } else {
+        alert('Error al guardar usuario: ' + (res.error||'desconocido'));
+      }
+    })
+    .catch(function(err) { alert('Error de conexión: ' + err.message); });
 });
 </script>
 </body>
