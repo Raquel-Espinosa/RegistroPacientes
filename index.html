@@ -126,8 +126,8 @@
     <div class="ll"><div class="li">＋</div><span class="lt">ClinicaApp</span></div>
     <h1 style="font-size:22px;font-weight:600;margin-bottom:4px">Bienvenido</h1>
     <p style="color:var(--text2);margin-bottom:1.5rem;font-size:14px">Accede con tus credenciales institucionales</p>
-    <div class="f"><label>Usuario</label><input type="text" id="lu" placeholder="usuario" autocomplete="username"/></div>
-    <div class="f"><label>Contraseña</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/></div>
+    <div class="f"><label for="lu">Usuario</label><input type="text" id="lu" placeholder="usuario" autocomplete="username"/></div>
+    <div class="f"><label for="lp">Contraseña</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/></div>
     <div id="le" class="le hidden">Usuario o contraseña incorrectos</div>
     <button class="bp" onclick="doLogin()">Ingresar</button>
     <p class="lh">Usuarios: <strong>admin</strong> / <strong>doctor</strong> / <strong>recepcion</strong><br>Contraseña: <strong>1234</strong></p>
@@ -178,24 +178,24 @@
       <div class="fc">
         <div class="fst">Datos Personales</div>
         <div class="fg">
-          <div class="f"><label>Nombre completo *</label><input type="text" id="fn" placeholder="Ej: María García López"/></div>
-          <div class="f"><label>Fecha de nacimiento *</label><input type="date" id="fnac" onchange="calcEdad()"/></div>
-          <div class="f"><label>Edad</label><input type="text" id="fed" placeholder="Se calcula automáticamente" readonly/></div>
-          <div class="f"><label>Sexo *</label><select id="fsx"><option value="">Seleccionar</option><option>Masculino</option><option>Femenino</option><option>Otro</option></select></div>
-          <div class="f"><label>Número de identificación *</label><input type="text" id="fid" placeholder="Cédula, pasaporte o NSS"/></div>
-          <div class="f"><label>Teléfono</label><input type="tel" id="ftel" placeholder="+52 55 1234 5678"/></div>
-          <div class="f"><label>Tel. emergencia</label><input type="tel" id="fem" placeholder="+52 55 8765 4321"/></div>
-          <div class="f"><label>Correo electrónico</label><input type="email" id="femail" placeholder="correo@ejemplo.com"/></div>
-          <div class="f ff"><label>Dirección</label><input type="text" id="fdir" placeholder="Calle, número, colonia, ciudad"/></div>
+          <div class="f"><label for="fn">Nombre completo *</label><input type="text" id="fn" placeholder="Ej: María García López"/></div>
+          <div class="f"><label for="fnac">Fecha de nacimiento *</label><input type="date" id="fnac" onchange="calcEdad()"/></div>
+          <div class="f"><label for="fed">Edad</label><input type="text" id="fed" placeholder="Se calcula automáticamente" readonly/></div>
+          <div class="f"><label for="fsx">Sexo *</label><select id="fsx"><option value="">Seleccionar</option><option>Masculino</option><option>Femenino</option><option>Otro</option></select></div>
+          <div class="f"><label for="fid">Número de identificación *</label><input type="text" id="fid" placeholder="Cédula, pasaporte o NSS"/></div>
+          <div class="f"><label for="ftel">Teléfono</label><input type="tel" id="ftel" placeholder="+52 55 1234 5678"/></div>
+          <div class="f"><label for="fem">Tel. emergencia</label><input type="tel" id="fem" placeholder="+52 55 8765 4321"/></div>
+          <div class="f"><label for="femail">Correo electrónico</label><input type="email" id="femail" placeholder="correo@ejemplo.com"/></div>
+          <div class="f ff"><label for="fdir">Dirección</label><input type="text" id="fdir" placeholder="Calle, número, colonia, ciudad"/></div>
         </div>
         <div class="fst" style="margin-top:2rem">Datos Médicos</div>
         <div class="fg">
-          <div class="f"><label>Tipo de sangre</label><select id="fsg"><option value="">Desconocido</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
-          <div class="f"><label>Estado</label><select id="fest"><option>Activo</option><option>En seguimiento</option><option>Alta</option><option>Inactivo</option></select></div>
-          <div class="f"><label>Tipo de miembro *</label><select id="ftm"><option value="">Seleccionar</option><option>Miembro</option><option>Visita</option><option>Bautizado</option></select></div>
-          <div class="f ff"><label>Alergias conocidas</label><input type="text" id="fal" placeholder="Ej: Penicilina, Polen, Látex (separadas por coma)"/></div>
-          <div class="f ff"><label>Antecedentes / Enfermedades crónicas</label><textarea id="fant" rows="3" placeholder="Diabetes tipo 2, hipertensión arterial..."></textarea></div>
-          <div class="f ff"><label>Medicamentos actuales</label><textarea id="fmed" rows="2" placeholder="Metformina 850mg, Losartán 50mg..."></textarea></div>
+          <div class="f"><label for="fsg">Tipo de sangre</label><select id="fsg"><option value="">Desconocido</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+          <div class="f"><label for="fest">Estado</label><select id="fest"><option>Activo</option><option>En seguimiento</option><option>Alta</option><option>Inactivo</option></select></div>
+          <div class="f"><label for="ftm">Tipo de miembro *</label><select id="ftm"><option value="">Seleccionar</option><option>Miembro</option><option>Visita</option><option>Bautizado</option></select></div>
+          <div class="f ff"><label for="fal">Alergias conocidas</label><input type="text" id="fal" placeholder="Ej: Penicilina, Polen, Látex (separadas por coma)"/></div>
+          <div class="f ff"><label for="fant">Antecedentes / Enfermedades crónicas</label><textarea id="fant" rows="3" placeholder="Diabetes tipo 2, hipertensión arterial..."></textarea></div>
+          <div class="f ff"><label for="fmed">Medicamentos actuales</label><textarea id="fmed" rows="2" placeholder="Metformina 850mg, Losartán 50mg..."></textarea></div>
         </div>
         <div id="ferr" class="le hidden" style="margin-top:1rem"></div>
         <div id="fok" class="fs hidden">✓ Paciente registrado correctamente</div>
@@ -220,11 +220,11 @@
         <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
           <div class="fst">Añadir usuario</div>
           <div class="fg" style="margin-top:1rem">
-            <div class="f"><label>Nombre</label><input type="text" id="unn" placeholder="Dr. Juan Pérez"/></div>
-            <div class="f"><label>Usuario</label><input type="text" id="unu" placeholder="jperez"/></div>
-            <div class="f"><label>Contraseña</label><input type="password" id="unp" placeholder="••••••"/></div>
-            <div class="f"><label>Rol</label><select id="unr"><option value="doctor">Médico / Especialista</option><option value="recepcion">Recepción / Enfermería</option><option value="admin">Administrador</option></select></div>
-            <div class="f ff"><label>Especialidad</label><input type="text" id="une" placeholder="Cardiología, Pediatría..."/></div>
+            <div class="f"><label for="unn">Nombre</label><input type="text" id="unn" placeholder="Dr. Juan Pérez"/></div>
+            <div class="f"><label for="unu">Usuario</label><input type="text" id="unu" placeholder="jperez"/></div>
+            <div class="f"><label for="unp">Contraseña</label><input type="password" id="unp" placeholder="••••••"/></div>
+            <div class="f"><label for="unr">Rol</label><select id="unr"><option value="doctor">Médico / Especialista</option><option value="recepcion">Recepción / Enfermería</option><option value="admin">Administrador</option></select></div>
+            <div class="f ff"><label for="une">Especialidad</label><input type="text" id="une" placeholder="Cardiología, Pediatría..."/></div>
           </div>
           <div class="fa" style="margin-top:1rem"><button class="bp auto" onclick="addUser()">Añadir Usuario</button></div>
         </div>
@@ -238,9 +238,9 @@
     <div class="mh"><h3>Nueva Entrada Clínica</h3><button class="mc" onclick="closeModal()">✕</button></div>
     <div class="mb">
       <div class="fg">
-        <div class="f"><label>Tipo de entrada</label><select id="eti"><option>Consulta general</option><option>Diagnóstico</option><option>Resultado de laboratorio</option><option>Prescripción</option><option>Nota de seguimiento</option><option>Interconsulta</option><option>Alta</option></select></div>
-        <div class="f"><label>Prioridad</label><select id="epr"><option>Normal</option><option>Importante</option><option>Urgente</option></select></div>
-        <div class="f ff"><label>Observaciones / Resultados *</label><textarea id="etx" rows="5" placeholder="Describe los hallazgos, diagnóstico, indicaciones..."></textarea></div>
+        <div class="f"><label for="eti">Tipo de entrada</label><select id="eti"><option>Consulta general</option><option>Diagnóstico</option><option>Resultado de laboratorio</option><option>Prescripción</option><option>Nota de seguimiento</option><option>Interconsulta</option><option>Alta</option></select></div>
+        <div class="f"><label for="epr">Prioridad</label><select id="epr"><option>Normal</option><option>Importante</option><option>Urgente</option></select></div>
+        <div class="f ff"><label for="etx">Observaciones / Resultados *</label><textarea id="etx" rows="5" placeholder="Describe los hallazgos, diagnóstico, indicaciones..."></textarea></div>
       </div>
       <div id="merr" class="le hidden"></div>
     </div>
@@ -304,40 +304,17 @@ function showPage(name){
   if(name==='usuarios')renderUsers();
 }
 
-// ── API: JSONP para lecturas, fetch para escrituras ──
-function apiGet(params){
-  return new Promise((resolve, reject)=>{
-    const cbName = 'gs_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
-    const url = SCRIPT_URL + '?' + new URLSearchParams({...params, callback: cbName, t: Date.now()});
-    console.log('[API] Llamando:', url);
-    const script = document.createElement('script');
-    let done = false;
-    const timer = setTimeout(()=>{
-      if(done) return; done=true;
-      console.error('[API] Timeout — URL:', url);
-      cleanup(); reject(new Error('Timeout (20s) — revisa Apps Script'));
-    }, 20000);
-    window[cbName] = function(data){
-      if(done) return; done=true;
-      console.log('[API] Respuesta:', data);
-      cleanup(); resolve(data);
-    };
-    function cleanup(){
-      clearTimeout(timer);
-      delete window[cbName];
-      if(script.parentNode) script.parentNode.removeChild(script);
-    }
-    script.onerror = (err)=>{
-      if(done) return; done=true;
-      console.error('[API] Script error — posible URL incorrecta o Apps Script sin permisos', err);
-      cleanup(); reject(new Error('Script error — verifica la URL del Apps Script'));
-    };
-    script.src = url;
-    document.head.appendChild(script);
+// ── API: fetch directo con CORS (Apps Script debe tener headers correctos) ──
+async function apiGet(params){
+  const url = SCRIPT_URL + '?' + new URLSearchParams({...params, t: Date.now()});
+  const r = await fetch(url, {
+    method: 'GET',
+    redirect: 'follow'
   });
+  if(!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
 }
-function apiPost(params){
-  // Escrituras también por JSONP — Apps Script las procesa en doGet
+async function apiPost(params){
   return apiGet(params);
 }
 
