@@ -304,19 +304,34 @@ function showPage(name){
   if(name==='usuarios')renderUsers();
 }
 
-// ── API — fetch con redirect:follow (funciona con Apps Script) ──
-async function apiGet(params){
-  const url=SCRIPT_URL+'?'+new URLSearchParams({...params,t:Date.now()});
-  const r=await fetch(url,{redirect:'follow'});
-  const text=await r.text();
-  try{return JSON.parse(text);}catch(e){throw new Error('Respuesta inesperada: '+text.substring(0,100));}
+// ── API: JSONP para lecturas, fetch para escrituras ──
+function apiGet(params){
+  return new Promise((resolve, reject)=>{
+    const cbName = 'gs_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
+    const url = SCRIPT_URL + '?' + new URLSearchParams({...params, callback: cbName, t: Date.now()});
+    const script = document.createElement('script');
+    let done = false;
+    const timer = setTimeout(()=>{
+      if(done) return; done=true;
+      cleanup(); reject(new Error('Timeout al conectar con Google Sheets'));
+    }, 20000);
+    window[cbName] = function(data){
+      if(done) return; done=true;
+      cleanup(); resolve(data);
+    };
+    function cleanup(){
+      clearTimeout(timer);
+      delete window[cbName];
+      if(script.parentNode) script.parentNode.removeChild(script);
+    }
+    script.onerror = ()=>{ if(done) return; done=true; cleanup(); reject(new Error('Error de red')); };
+    script.src = url;
+    document.head.appendChild(script);
+  });
 }
-async function apiPost(params){
-  // Apps Script con CORS: enviamos todo por GET usando URLSearchParams
-  const url=SCRIPT_URL+'?'+new URLSearchParams({...params,t:Date.now()});
-  const r=await fetch(url,{redirect:'follow'});
-  const text=await r.text();
-  try{return JSON.parse(text);}catch(e){throw new Error('Respuesta inesperada: '+text.substring(0,100));}
+function apiPost(params){
+  // Escrituras también por JSONP — Apps Script las procesa en doGet
+  return apiGet(params);
 }
 
 async function loadPacientes(){
