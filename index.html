@@ -43,6 +43,12 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
 .btn.sec{background:var(--surface2);color:var(--text);border:1px solid var(--border);width:auto}
 .btn.sec:hover{background:var(--border)}
 .btn.sm{width:auto}
+.btn.green{background:var(--green);width:auto}
+.btn.green:hover{background:#047857}
+.btn.amber{background:var(--amber);width:auto}
+.btn.amber:hover{background:#b45309}
+.btn.red-outline{background:transparent;color:var(--red);border:1px solid var(--red);width:auto}
+.btn.red-outline:hover{background:var(--red-bg)}
 .btn.danger{background:transparent;color:var(--text3);border:1px solid var(--border);width:100%;margin-top:8px;font-size:13px;padding:8px}
 .btn.danger:hover{background:var(--red-bg);color:var(--red);border-color:var(--red)}
 
@@ -64,6 +70,9 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
 .avatar.xs{width:30px;height:30px;font-size:11px}
 .avatar.m{background:var(--blue)}.avatar.f{background:var(--purple)}.avatar.o{background:var(--green)}
 
+/* BADGE en nav */
+.nav-badge{background:var(--red);color:#fff;border-radius:20px;font-size:10px;font-weight:600;padding:2px 6px;margin-left:auto}
+
 /* MAIN */
 .main{flex:1;overflow-y:auto;padding:2rem;background:var(--bg)}
 .page{animation:fi .2s ease}
@@ -73,8 +82,9 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
 .page-sub{color:var(--text2);font-size:14px;margin-top:2px}
 
 /* SEARCH */
-.search input{padding:9px 14px;border:1px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:14px;width:280px;outline:none;background:#fff}
+.search input{padding:9px 14px;border:1px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:14px;width:240px;outline:none;background:#fff}
 .search input:focus{border-color:var(--blue)}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 
 /* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
@@ -104,8 +114,9 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
 .exp-name{font-size:20px;font-weight:600;margin-bottom:4px}
 .exp-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
 .exp-alerta{background:var(--red-bg);border:1px solid #FECACA;border-radius:var(--rs);padding:6px 12px;color:var(--red);font-size:13px;margin-top:8px}
-.ent-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.ent-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
 .ent-header h3{font-size:16px;font-weight:600}
+.ent-actions{display:flex;gap:8px;flex-wrap:wrap}
 .entrada{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;border-left:4px solid var(--border)}
 .entrada.Importante{border-left-color:var(--amber)}
 .entrada.Urgente{border-left-color:var(--red)}
@@ -114,14 +125,23 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
 .ent-fecha{font-size:12px;color:var(--text3);font-family:monospace}
 .ent-texto{font-size:14px;line-height:1.65;white-space:pre-wrap}
 
+/* CITAS */
+.cita-row{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.cita-num{width:28px;height:28px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.cita-info{flex:1}
+.cita-nombre{font-weight:600;font-size:14px}
+.cita-detalle{font-size:12px;color:var(--text2);margin-top:2px}
+.cita-hora{font-family:monospace;font-size:13px;color:var(--blue);font-weight:500;flex-shrink:0}
+
 /* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem}
 .modal{background:#fff;border-radius:var(--r);width:100%;max-width:560px;box-shadow:0 4px 16px rgba(0,0,0,.10);animation:su .2s ease}
+.modal.wide{max-width:700px}
 @keyframes su{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
 .modal-head{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid var(--border)}
 .modal-head h3{font-size:16px;font-weight:600}
 .modal-close{background:none;border:none;cursor:pointer;font-size:18px;color:var(--text3);line-height:1}
-.modal-body{padding:1.5rem}
+.modal-body{padding:1.5rem;max-height:70vh;overflow-y:auto}
 .modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:1rem 1.5rem;border-top:1px solid var(--border)}
 
 /* USERS TABLE */
@@ -129,6 +149,18 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
 .tbl th{text-align:left;padding:8px 12px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text3)}
 .tbl td{padding:10px 12px;border-bottom:1px solid var(--border)}
 .tbl tr:last-child td{border-bottom:none}
+
+/* PRINT */
+@media print{
+  .sidebar,.page-header .toolbar,.ent-actions,.btn,.nav-item,#modal-overlay{display:none!important}
+  .main{padding:0}
+  .app{display:block;height:auto}
+  .exp-header{border:1px solid #ccc;border-radius:0}
+  body{background:#fff}
+  .entrada{break-inside:avoid}
+  .print-header{display:block!important}
+}
+.print-header{display:none;text-align:center;margin-bottom:1.5rem;border-bottom:2px solid #000;padding-bottom:1rem}
 
 /* UTILS */
 .hidden{display:none!important}
@@ -146,14 +178,8 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
     <div class="logo"><div class="logo-icon">＋</div><span class="logo-text">ClinicaApp</span></div>
     <h1 style="font-size:22px;font-weight:600;margin-bottom:4px">Bienvenido</h1>
     <p style="color:var(--text2);margin-bottom:1.5rem;font-size:14px">Accede con tus credenciales</p>
-    <div class="field">
-      <label for="inp-user">Usuario</label>
-      <input id="inp-user" type="text" placeholder="usuario" autocomplete="username"/>
-    </div>
-    <div class="field">
-      <label for="inp-pass">Contraseña</label>
-      <input id="inp-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
-    </div>
+    <div class="field"><label for="inp-user">Usuario</label><input id="inp-user" type="text" placeholder="usuario" autocomplete="username"/></div>
+    <div class="field"><label for="inp-pass">Contraseña</label><input id="inp-pass" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
     <div id="login-err" class="err-box hidden">Usuario o contraseña incorrectos</div>
     <button class="btn" id="btn-login">Ingresar</button>
     <p class="hint">Usuarios: <strong>admin</strong> / <strong>doctor</strong> / <strong>recepcion</strong><br>Contraseña: <strong>1234</strong></p>
@@ -172,6 +198,11 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
       <div class="nav-item" id="nav-nuevo" data-page="nuevo" data-roles="admin,doctor">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
         Nuevo Paciente
+      </div>
+      <div class="nav-item" id="nav-citas" data-page="citas">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Mis Citas
+        <span class="nav-badge hidden" id="badge-citas">0</span>
       </div>
       <div class="nav-item" id="nav-usuarios" data-page="usuarios" data-roles="admin">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/><line x1="12" y1="13" x2="12" y2="21"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
@@ -196,16 +227,24 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
     <div id="page-pacientes" class="page">
       <div class="page-header">
         <div><h2>Pacientes</h2><p class="page-sub">Registro clínico centralizado</p></div>
-        <div class="search"><input id="inp-buscar" type="text" placeholder="Buscar por nombre o ID..."/></div>
+        <div class="toolbar">
+          <div class="search"><input id="inp-buscar" type="text" placeholder="Buscar por nombre o ID..."/></div>
+          <select id="filtro-tipo" style="padding:9px 12px;border:1px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:14px;background:#fff;outline:none">
+            <option value="">Todos</option>
+            <option value="Miembro">Miembro</option>
+            <option value="Visita">Visita</option>
+            <option value="Bautizado">Bautizado</option>
+          </select>
+        </div>
       </div>
       <div id="msg-carga" class="loading hidden">Cargando...</div>
       <div id="grid-pacientes" class="grid"></div>
       <div id="msg-vacio" class="empty hidden"><div class="empty-icon">👤</div><p>No se encontraron pacientes</p></div>
     </div>
 
-    <!-- NUEVO PACIENTE -->
+    <!-- NUEVO / EDITAR PACIENTE -->
     <div id="page-nuevo" class="page hidden">
-      <div class="page-header"><div><h2>Nuevo Paciente</h2><p class="page-sub">Completa los datos del paciente</p></div></div>
+      <div class="page-header"><div><h2 id="form-titulo">Nuevo Paciente</h2><p class="page-sub">Completa los datos del paciente</p></div></div>
       <div class="form-card">
         <div class="section-title">Datos Personales</div>
         <div class="form-grid">
@@ -228,8 +267,9 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
           <div class="field full"><label for="f-antecedentes">Antecedentes / Enfermedades crónicas</label><textarea id="f-antecedentes" rows="3" placeholder="Diabetes tipo 2, hipertensión arterial..."></textarea></div>
           <div class="field full"><label for="f-meds">Medicamentos actuales</label><textarea id="f-meds" rows="2" placeholder="Metformina 850mg, Losartán 50mg..."></textarea></div>
         </div>
+        <input type="hidden" id="f-pid"/>
         <div id="form-err" class="err-box hidden" style="margin-top:1rem"></div>
-        <div id="form-ok" class="ok-box hidden">✓ Paciente registrado correctamente</div>
+        <div id="form-ok" class="ok-box hidden"></div>
         <div class="form-actions">
           <button class="btn sec" id="btn-cancelar-form">Cancelar</button>
           <button class="btn sm" id="btn-guardar-pac">Registrar Paciente</button>
@@ -239,8 +279,26 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
 
     <!-- EXPEDIENTE -->
     <div id="page-expediente" class="page hidden">
-      <div class="page-header"><button class="btn sec" id="btn-volver">← Volver</button></div>
+      <div class="page-header">
+        <button class="btn sec" id="btn-volver">← Volver</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn amber" id="btn-editar-pac">✏ Editar datos</button>
+          <button class="btn sec" id="btn-imprimir" onclick="imprimirExpediente()">🖨 Imprimir</button>
+        </div>
+      </div>
       <div id="exp-contenido"></div>
+    </div>
+
+    <!-- CITAS -->
+    <div id="page-citas" class="page hidden">
+      <div class="page-header">
+        <div><h2 id="citas-titulo">Mis Citas</h2><p class="page-sub">Pacientes asignados por fecha y hora</p></div>
+        <div class="toolbar">
+          <input type="date" id="filtro-fecha-citas" style="padding:9px 12px;border:1px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:14px;background:#fff;outline:none"/>
+          <button class="btn sm" id="btn-todas-citas">Ver todas</button>
+        </div>
+      </div>
+      <div id="lista-citas"><div class="loading">Cargando citas...</div></div>
     </div>
 
     <!-- USUARIOS -->
@@ -268,21 +326,42 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
   </main>
 </div>
 
-<!-- MODAL ENTRADA -->
-<div id="modal-overlay" class="overlay hidden">
+<!-- MODAL ENTRADA CLÍNICA -->
+<div id="modal-entrada" class="overlay hidden">
   <div class="modal">
-    <div class="modal-head"><h3>Nueva Entrada Clínica</h3><button class="modal-close" id="btn-cerrar-modal">✕</button></div>
+    <div class="modal-head"><h3>Nueva Entrada Clínica</h3><button class="modal-close" id="btn-cerrar-entrada">✕</button></div>
     <div class="modal-body">
       <div class="form-grid">
         <div class="field"><label for="e-tipo">Tipo de entrada</label><select id="e-tipo"><option>Consulta general</option><option>Diagnóstico</option><option>Resultado de laboratorio</option><option>Prescripción</option><option>Nota de seguimiento</option><option>Interconsulta</option><option>Alta</option></select></div>
         <div class="field"><label for="e-prioridad">Prioridad</label><select id="e-prioridad"><option>Normal</option><option>Importante</option><option>Urgente</option></select></div>
         <div class="field full"><label for="e-texto">Observaciones / Resultados *</label><textarea id="e-texto" rows="5" placeholder="Describe los hallazgos, diagnóstico, indicaciones..."></textarea></div>
       </div>
-      <div id="modal-err" class="err-box hidden"></div>
+      <div id="modal-ent-err" class="err-box hidden"></div>
     </div>
     <div class="modal-foot">
-      <button class="btn sec" id="btn-cancelar-modal">Cancelar</button>
+      <button class="btn sec" id="btn-cancelar-entrada">Cancelar</button>
       <button class="btn sm" id="btn-guardar-entrada">Guardar Entrada</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AGENDAR CITA -->
+<div id="modal-cita" class="overlay hidden">
+  <div class="modal">
+    <div class="modal-head"><h3>Agendar Cita</h3><button class="modal-close" id="btn-cerrar-cita">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label for="c-doctor">Doctor / Especialista *</label><select id="c-doctor"></select></div>
+        <div class="field"><label for="c-fecha">Fecha *</label><input id="c-fecha" type="date"/></div>
+        <div class="field"><label for="c-hora">Hora *</label><input id="c-hora" type="time"/></div>
+        <div class="field"><label for="c-motivo">Motivo</label><input id="c-motivo" type="text" placeholder="Revisión general, seguimiento..."/></div>
+        <div class="field full"><label for="c-notas">Notas adicionales</label><textarea id="c-notas" rows="2" placeholder="Indicaciones previas a la consulta..."></textarea></div>
+      </div>
+      <div id="modal-cita-err" class="err-box hidden"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn sec" id="btn-cancelar-cita">Cancelar</button>
+      <button class="btn sm" id="btn-guardar-cita">Agendar Cita</button>
     </div>
   </div>
 </div>
@@ -290,9 +369,6 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(
 <script>
 'use strict';
 
-// ══════════════════════════════════════════
-//  CONFIG
-// ══════════════════════════════════════════
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx70xrmc9PUa9SLgklAIrXDZAAStchqTSGXjMAxiCwEdBQogM-N_EvUvLF0bf-WR8Vg/exec';
 
 var USERS_DEFAULT = [
@@ -301,269 +377,214 @@ var USERS_DEFAULT = [
   {user:'recepcion', pass:'1234', nombre:'Laura Torres',      rol:'recepcion', especialidad:''}
 ];
 
-// ══════════════════════════════════════════
-//  ESTADO
-// ══════════════════════════════════════════
 var currentUser = null;
 var pacientes   = [];
 var pacienteId  = null;
+var usersCache  = null;
 
-// ══════════════════════════════════════════
-//  USUARIOS (localStorage)
-// ══════════════════════════════════════════
-// Caché local de usuarios (se carga desde Sheets al iniciar)
-var usersCache = null;
+// ── HELPERS ──
+function $(id){ return document.getElementById(id); }
+function show(id){ $(id).classList.remove('hidden'); }
+function hide(id){ $(id).classList.add('hidden'); }
+function val(id){ return $(id).value; }
+function setVal(id,v){ $(id).value = v; }
+function initials(n){ return (n||'?').split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase(); }
 
-function getUsers() {
-  return usersCache || USERS_DEFAULT;
-}
-
-function cargarUsuarios(callback) {
-  api({ action: 'getUsuarios' })
-    .then(function(data) {
-      if (data.usuarios && data.usuarios.length) {
-        usersCache = data.usuarios;
-      } else {
-        // Primera vez: subir usuarios por defecto a Sheets
-        usersCache = USERS_DEFAULT;
-        USERS_DEFAULT.forEach(function(u) {
-          api({ action:'addUsuario', nombre:u.nombre, user:u.user,
-                pass:u.pass, rol:u.rol, especialidad:u.especialidad||'' }).catch(function(){});
-        });
-      }
-      if (callback) callback();
-    })
-    .catch(function() {
-      usersCache = USERS_DEFAULT;
-      if (callback) callback();
-    });
-}
-
-// ══════════════════════════════════════════
-//  API — fetch a Google Apps Script
-// ══════════════════════════════════════════
-function api(params) {
-  var qs = Object.keys(params).map(function(k) {
-    return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+// ── API ──
+function api(params){
+  var qs = Object.keys(params).map(function(k){
+    return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);
   }).join('&');
-  var url = SCRIPT_URL + '?' + qs + '&t=' + Date.now();
-  return fetch(url, { method: 'GET', redirect: 'follow' })
-    .then(function(r) { return r.text(); })
-    .then(function(txt) {
-      try { return JSON.parse(txt); }
-      catch(e) { throw new Error('Respuesta inválida del servidor'); }
+  return fetch(SCRIPT_URL+'?'+qs+'&t='+Date.now(),{method:'GET',redirect:'follow'})
+    .then(function(r){return r.text();})
+    .then(function(txt){
+      try{return JSON.parse(txt);}
+      catch(e){throw new Error('Respuesta inválida del servidor');}
     });
 }
 
-// ══════════════════════════════════════════
-//  HELPERS UI
-// ══════════════════════════════════════════
-function $(id) { return document.getElementById(id); }
-function show(id) { $(id).classList.remove('hidden'); }
-function hide(id) { $(id).classList.add('hidden'); }
-function val(id)  { return $(id).value; }
-function setVal(id, v) { $(id).value = v; }
+// ── USUARIOS ──
+function getUsers(){ return usersCache || USERS_DEFAULT; }
 
-function showMsg(id, msg, isErr) {
-  var el = $(id);
-  el.textContent = msg;
-  el.className = isErr ? 'err-box' : 'ok-box';
-  show(id);
-  if (!isErr) setTimeout(function() { hide(id); }, 3000);
+function cargarUsuarios(cb){
+  api({action:'getUsuarios'}).then(function(d){
+    usersCache = (d.usuarios && d.usuarios.length) ? d.usuarios : USERS_DEFAULT;
+    if(cb) cb();
+  }).catch(function(){ usersCache = USERS_DEFAULT; if(cb) cb(); });
 }
 
-function initials(name) {
-  return (name || '?').split(' ').map(function(w) { return w[0]; }).join('').slice(0,2).toUpperCase();
-}
-
-// ══════════════════════════════════════════
-//  LOGIN
-// ══════════════════════════════════════════
-function doLogin() {
+// ── LOGIN ──
+function doLogin(){
   var u = $('inp-user').value.trim();
   var p = $('inp-pass').value;
   $('btn-login').textContent = 'Verificando...';
   $('btn-login').disabled = true;
-  // Siempre cargar usuarios frescos desde Sheets al hacer login
-  api({ action: 'getUsuarios' })
-    .then(function(data) {
-      if (data.usuarios && data.usuarios.length) {
-        usersCache = data.usuarios;
-      } else {
-        usersCache = USERS_DEFAULT;
-      }
-      var found = usersCache.filter(function(x) { return x.user === u && x.pass === p; })[0];
-      $('btn-login').textContent = 'Ingresar';
-      $('btn-login').disabled = false;
-      if (found) {
-        currentUser = found;
-        try { sessionStorage.setItem('session', JSON.stringify(found)); } catch(e) {}
-        hide('login-err');
-        startApp();
-        api({ action:'logSession', usuario:found.user, nombre:found.nombre,
-              rol:found.rol, especialidad:found.especialidad||'',
-              fecha:new Date().toLocaleString('es-MX'),
-              dispositivo:navigator.userAgent.substring(0,80) }).catch(function(){});
-      } else {
-        show('login-err');
-      }
-    })
-    .catch(function() {
-      // Si falla la red, intentar con caché local
-      $('btn-login').textContent = 'Ingresar';
-      $('btn-login').disabled = false;
-      var found = getUsers().filter(function(x) { return x.user === u && x.pass === p; })[0];
-      if (found) {
-        currentUser = found;
-        try { sessionStorage.setItem('session', JSON.stringify(found)); } catch(e) {}
-        hide('login-err');
-        startApp();
-      } else {
-        show('login-err');
-      }
-    });
+  api({action:'getUsuarios'}).then(function(d){
+    usersCache = (d.usuarios && d.usuarios.length) ? d.usuarios : USERS_DEFAULT;
+    var found = usersCache.filter(function(x){return x.user===u && x.pass===p;})[0];
+    $('btn-login').textContent='Ingresar'; $('btn-login').disabled=false;
+    if(found){ currentUser=found; try{sessionStorage.setItem('session',JSON.stringify(found));}catch(e){} hide('login-err'); startApp(); api({action:'logSession',usuario:found.user,nombre:found.nombre,rol:found.rol,especialidad:found.especialidad||'',fecha:new Date().toLocaleString('es-MX'),dispositivo:navigator.userAgent.substring(0,80)}).catch(function(){}); }
+    else{ show('login-err'); }
+  }).catch(function(){
+    $('btn-login').textContent='Ingresar'; $('btn-login').disabled=false;
+    var found = getUsers().filter(function(x){return x.user===u && x.pass===p;})[0];
+    if(found){ currentUser=found; try{sessionStorage.setItem('session',JSON.stringify(found));}catch(e){} hide('login-err'); startApp(); }
+    else{ show('login-err'); }
+  });
 }
-
 $('btn-login').addEventListener('click', doLogin);
-$('inp-pass').addEventListener('keydown', function(e) { if(e.key==='Enter') doLogin(); });
-$('inp-user').addEventListener('keydown', function(e) { if(e.key==='Enter') doLogin(); });
+$('inp-pass').addEventListener('keydown', function(e){if(e.key==='Enter') doLogin();});
+$('inp-user').addEventListener('keydown', function(e){if(e.key==='Enter') doLogin();});
 
-// ══════════════════════════════════════════
-//  LOGOUT
-// ══════════════════════════════════════════
-function doLogout() {
-  try { sessionStorage.removeItem('session'); } catch(e) {}
-  currentUser = null;
-  hide('pg-app');
-  show('pg-login');
-  setVal('inp-user','');
-  setVal('inp-pass','');
-}
-$('btn-logout').addEventListener('click', doLogout);
+// ── LOGOUT ──
+$('btn-logout').addEventListener('click', function(){
+  try{sessionStorage.removeItem('session');}catch(e){}
+  currentUser=null; hide('pg-app'); show('pg-login');
+  setVal('inp-user',''); setVal('inp-pass','');
+});
 
-// ══════════════════════════════════════════
-//  INICIAR APP
-// ══════════════════════════════════════════
-function startApp() {
-  // Cargar usuarios desde Sheets (para que se vean en todas las PCs)
-  cargarUsuarios(function() { renderUsuarios(); });
-  hide('pg-login');
-  show('pg-app');
+// ── START APP ──
+function startApp(){
+  hide('pg-login'); show('pg-app');
   $('sb-avatar').textContent = initials(currentUser.nombre);
   $('sb-nombre').textContent = currentUser.nombre;
-  var roles = {admin:'Administrador', doctor: currentUser.especialidad||'Médico', recepcion:'Recepción'};
-  $('sb-rol').textContent = roles[currentUser.rol] || currentUser.rol;
-
-  // Ocultar nav según rol
-  document.querySelectorAll('[data-roles]').forEach(function(el) {
-    var allowed = el.getAttribute('data-roles').split(',');
-    el.style.display = allowed.indexOf(currentUser.rol) > -1 ? '' : 'none';
+  var roles={admin:'Administrador',doctor:currentUser.especialidad||'Médico',recepcion:'Recepción'};
+  $('sb-rol').textContent = roles[currentUser.rol]||currentUser.rol;
+  document.querySelectorAll('[data-roles]').forEach(function(el){
+    var allowed=el.getAttribute('data-roles').split(',');
+    el.style.display=allowed.indexOf(currentUser.rol)>-1?'':'none';
   });
-
+  // Título citas según rol
+  if(currentUser.rol==='admin') $('citas-titulo').textContent='Todas las Citas';
+  else $('citas-titulo').textContent='Mis Citas';
+  cargarUsuarios(function(){ renderUsuarios(); });
   goPage('pacientes');
   cargarPacientes();
 }
 
-// Restaurar sesión al recargar
-try {
-  var sess = sessionStorage.getItem('session');
-  if (sess) { currentUser = JSON.parse(sess); startApp(); }
-} catch(e) {}
+try{var s=sessionStorage.getItem('session');if(s){currentUser=JSON.parse(s);startApp();}}catch(e){}
 
-// ══════════════════════════════════════════
-//  NAVEGACIÓN
-// ══════════════════════════════════════════
-function goPage(name) {
-  document.querySelectorAll('.page').forEach(function(p) { p.classList.add('hidden'); });
-  show('page-' + name);
-  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
-  var nav = $('nav-' + name);
-  if (nav) nav.classList.add('active');
-  if (name === 'usuarios') renderUsuarios();
+// ── NAVEGACIÓN ──
+function goPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.add('hidden');});
+  show('page-'+name);
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
+  var nav=$('nav-'+name); if(nav) nav.classList.add('active');
+  if(name==='usuarios') renderUsuarios();
+  if(name==='citas') cargarCitas();
 }
-
-document.querySelectorAll('.nav-item[data-page]').forEach(function(el) {
-  el.addEventListener('click', function() { goPage(el.getAttribute('data-page')); });
+document.querySelectorAll('.nav-item[data-page]').forEach(function(el){
+  el.addEventListener('click',function(){goPage(el.getAttribute('data-page'));});
 });
+$('btn-volver').addEventListener('click',function(){goPage('pacientes');});
+$('btn-cancelar-form').addEventListener('click',function(){goPage('pacientes');});
 
-$('btn-volver').addEventListener('click', function() { goPage('pacientes'); });
-$('btn-cancelar-form').addEventListener('click', function() { goPage('pacientes'); });
-
-// ══════════════════════════════════════════
-//  PACIENTES — cargar
-// ══════════════════════════════════════════
-function cargarPacientes() {
-  var msg = $('msg-carga');
-  msg.textContent = 'Cargando datos desde Google Sheets...';
-  show('msg-carga');
-  hide('msg-vacio');
-  api({ action: 'getPacientes' })
-    .then(function(data) {
-      pacientes = data.pacientes || [];
-      hide('msg-carga');
-      renderPacientes(pacientes);
-    })
-    .catch(function(err) {
-      msg.textContent = '⚠ Error: ' + err.message;
-    });
+// ── PACIENTES — cargar ──
+function cargarPacientes(){
+  var msg=$('msg-carga'); msg.textContent='Cargando datos...'; show('msg-carga'); hide('msg-vacio');
+  api({action:'getPacientes'}).then(function(d){
+    pacientes=d.pacientes||[]; hide('msg-carga'); filtrarYRender();
+  }).catch(function(err){ msg.textContent='⚠ Error: '+err.message; });
 }
 
-function renderPacientes(lista) {
-  var grid = $('grid-pacientes');
-  if (!lista.length) { grid.innerHTML = ''; show('msg-vacio'); return; }
+function filtrarYRender(){
+  var q=$('inp-buscar').value.toLowerCase();
+  var tipo=$('filtro-tipo').value;
+  var lista=pacientes.filter(function(p){
+    var matchQ=(p.nombre||'').toLowerCase().indexOf(q)>-1||(p.id||'').toLowerCase().indexOf(q)>-1||(p.cedula||'').toLowerCase().indexOf(q)>-1;
+    var matchT=!tipo||(p.tipoMiembro||'')===tipo;
+    return matchQ && matchT;
+  });
+  renderPacientes(lista);
+}
+
+function renderPacientes(lista){
+  var grid=$('grid-pacientes');
+  if(!lista.length){grid.innerHTML='';show('msg-vacio');return;}
   hide('msg-vacio');
-  grid.innerHTML = lista.map(function(p) {
-    var sc = p.sexo === 'Masculino' ? 'm' : p.sexo === 'Femenino' ? 'f' : 'o';
-    var ini = initials(p.nombre);
-    var estadoClass = {Activo:'green','En seguimiento':'blue',Alta:'gray',Inactivo:'gray'}[p.estado] || 'gray';
-    var tmClass = {Miembro:'green',Visita:'blue',Bautizado:'amber'}[p.tipoMiembro] || '';
+  grid.innerHTML=lista.map(function(p){
+    var sc=p.sexo==='Masculino'?'m':p.sexo==='Femenino'?'f':'o';
+    var ec={Activo:'green','En seguimiento':'blue',Alta:'gray',Inactivo:'gray'}[p.estado]||'gray';
+    var tc={Miembro:'green',Visita:'blue',Bautizado:'amber'}[p.tipoMiembro]||'';
     return '<div class="card" onclick="abrirExpediente(\''+p.id+'\')">'
-      + '<div class="card-top">'
-      + '<div class="avatar md '+sc+'">'+ini+'</div>'
-      + '<div><div class="card-name">'+p.nombre+'</div><div class="card-id">'+p.id+' · '+(p.cedula||'')+'</div></div>'
-      + '</div>'
-      + '<div class="pills">'
-      + (p.edad ? '<span class="pill gray">'+p.edad+'</span>' : '')
-      + (p.sangre ? '<span class="pill blue">'+p.sangre+'</span>' : '')
-      + '<span class="pill '+estadoClass+'">'+p.estado+'</span>'
-      + (p.tipoMiembro && tmClass ? '<span class="pill '+tmClass+'">'+p.tipoMiembro+'</span>' : '')
-      + (p.alergias ? '<span class="pill red">⚠ Alergias</span>' : '')
-      + '</div></div>';
+      +'<div class="card-top"><div class="avatar md '+sc+'">'+initials(p.nombre)+'</div>'
+      +'<div><div class="card-name">'+p.nombre+'</div><div class="card-id">'+p.id+' · '+(p.cedula||'')+'</div></div></div>'
+      +'<div class="pills">'
+      +(p.edad?'<span class="pill gray">'+p.edad+'</span>':'')
+      +(p.sangre?'<span class="pill blue">'+p.sangre+'</span>':'')
+      +'<span class="pill '+ec+'">'+p.estado+'</span>'
+      +(p.tipoMiembro&&tc?'<span class="pill '+tc+'">'+p.tipoMiembro+'</span>':'')
+      +(p.alergias?'<span class="pill red">⚠ Alergias</span>':'')
+      +'</div></div>';
   }).join('');
 }
 
-$('inp-buscar').addEventListener('input', function() {
-  var q = this.value.toLowerCase();
-  renderPacientes(pacientes.filter(function(p) {
-    return (p.nombre||'').toLowerCase().indexOf(q) > -1
-        || (p.id||'').toLowerCase().indexOf(q) > -1
-        || (p.cedula||'').toLowerCase().indexOf(q) > -1;
-  }));
+$('inp-buscar').addEventListener('input', filtrarYRender);
+$('filtro-tipo').addEventListener('change', filtrarYRender);
+
+// ── NUEVO PACIENTE ──
+$('f-nac').addEventListener('change',function(){
+  var v=this.value; if(!v) return;
+  setVal('f-edad',Math.floor((Date.now()-new Date(v))/(1000*60*60*24*365.25))+' años');
 });
 
-// ══════════════════════════════════════════
-//  NUEVO PACIENTE — guardar
-// ══════════════════════════════════════════
-$('f-nac').addEventListener('change', function() {
-  var v = this.value;
-  if (!v) return;
-  var edad = Math.floor((Date.now() - new Date(v)) / (1000*60*60*24*365.25));
-  setVal('f-edad', edad + ' años');
+function modoNuevo(){
+  $('form-titulo').textContent='Nuevo Paciente';
+  $('btn-guardar-pac').textContent='Registrar Paciente';
+  setVal('f-pid','');
+  ['f-nombre','f-nac','f-edad','f-cedula','f-tel','f-tel2','f-email','f-dir','f-alergias','f-antecedentes','f-meds']
+    .forEach(function(id){setVal(id,'');});
+  setVal('f-sexo',''); setVal('f-sangre',''); setVal('f-estado','Activo'); setVal('f-tipo-miembro','');
+  hide('form-err'); hide('form-ok');
+  goPage('nuevo');
+}
+
+function modoEditar(p){
+  $('form-titulo').textContent='Editar Paciente';
+  $('btn-guardar-pac').textContent='Guardar Cambios';
+  setVal('f-pid', p.id);
+  setVal('f-nombre', p.nombre||'');
+  setVal('f-nac', p.nacimiento||'');
+  setVal('f-edad', p.edad||'');
+  setVal('f-sexo', p.sexo||'');
+  setVal('f-cedula', p.cedula||'');
+  setVal('f-tel', p.telefono||'');
+  setVal('f-tel2', p.telEmergencia||'');
+  setVal('f-email', p.email||'');
+  setVal('f-dir', p.direccion||'');
+  setVal('f-sangre', p.sangre||'');
+  setVal('f-estado', p.estado||'Activo');
+  setVal('f-tipo-miembro', p.tipoMiembro||'');
+  setVal('f-alergias', p.alergias||'');
+  setVal('f-antecedentes', p.antecedentes||'');
+  setVal('f-meds', p.medicamentos||'');
+  hide('form-err'); hide('form-ok');
+  goPage('nuevo');
+}
+
+$('nav-nuevo').addEventListener('click', function(){ modoNuevo(); });
+$('btn-cancelar-form').addEventListener('click', function(){ goPage('pacientes'); });
+
+$('btn-editar-pac').addEventListener('click', function(){
+  var p=pacientes.filter(function(x){return x.id===pacienteId;})[0];
+  if(p) modoEditar(p);
 });
 
-$('btn-guardar-pac').addEventListener('click', function() {
-  var reqs = ['f-nombre','f-nac','f-sexo','f-cedula'];
-  var ok = true;
-  reqs.forEach(function(id) {
-    var el = $(id);
-    if (!el.value.trim()) { el.style.borderColor='var(--red)'; ok=false; }
+$('btn-guardar-pac').addEventListener('click', function(){
+  var reqs=['f-nombre','f-nac','f-sexo','f-cedula'];
+  var ok=true;
+  reqs.forEach(function(id){
+    var el=$(id);
+    if(!el.value.trim()){el.style.borderColor='var(--red)';ok=false;}
     else el.style.borderColor='';
   });
-  if (!ok) { showMsg('form-err','Completa los campos obligatorios (*)',true); return; }
+  if(!ok){showMsg('form-err','Completa los campos obligatorios (*)',true);return;}
 
-  var pid = 'P-' + Date.now().toString(36).toUpperCase();
-  var params = {
-    action:'addPaciente', id:pid,
+  var editId=val('f-pid');
+  var isEdit=!!editId;
+  var pid=isEdit?editId:'P-'+Date.now().toString(36).toUpperCase();
+  var params={
+    action:isEdit?'updatePaciente':'addPaciente', id:pid,
     nombre:val('f-nombre'), nacimiento:val('f-nac'), edad:val('f-edad'),
     sexo:val('f-sexo'), cedula:val('f-cedula'), telefono:val('f-tel'),
     telEmergencia:val('f-tel2'), email:val('f-email'), direccion:val('f-dir'),
@@ -571,170 +592,249 @@ $('btn-guardar-pac').addEventListener('click', function() {
     alergias:val('f-alergias'), antecedentes:val('f-antecedentes'),
     medicamentos:val('f-meds'), fechaRegistro:new Date().toLocaleString('es-MX')
   };
-
   hide('form-err');
-  api(params)
-    .then(function(r) {
-      if (r.ok) {
-        showMsg('form-ok','✓ Paciente registrado correctamente', false);
-        show('form-ok');
-        limpiarForm();
-        cargarPacientes();
-        setTimeout(function() { goPage('pacientes'); }, 1500);
-      } else {
-        showMsg('form-err', r.error || 'Error al guardar', true);
-      }
-    })
-    .catch(function(err) { showMsg('form-err','Error: '+err.message, true); });
+  api(params).then(function(r){
+    if(r.ok){
+      var msg=isEdit?'✓ Datos actualizados correctamente':'✓ Paciente registrado correctamente';
+      $('form-ok').textContent=msg; $('form-ok').className='ok-box'; show('form-ok');
+      cargarPacientes();
+      setTimeout(function(){
+        hide('form-ok');
+        if(isEdit){ pacienteId=pid; goPage('expediente'); abrirExpediente(pid); }
+        else goPage('pacientes');
+      },1500);
+    } else { showMsg('form-err',r.error||'Error al guardar',true); }
+  }).catch(function(err){showMsg('form-err','Error: '+err.message,true);});
 });
 
-function limpiarForm() {
-  ['f-nombre','f-nac','f-edad','f-cedula','f-tel','f-tel2','f-email','f-dir','f-alergias','f-antecedentes','f-meds']
-    .forEach(function(id) { setVal(id,''); });
-  setVal('f-sexo',''); setVal('f-sangre',''); setVal('f-estado','Activo'); setVal('f-tipo-miembro','');
+function showMsg(id,msg,isErr){
+  var el=$(id); el.textContent=msg;
+  el.className=isErr?'err-box':'ok-box'; show(id);
+  if(!isErr) setTimeout(function(){hide(id);},3000);
 }
 
-// ══════════════════════════════════════════
-//  EXPEDIENTE
-// ══════════════════════════════════════════
-function abrirExpediente(id) {
-  pacienteId = id;
-  goPage('expediente');
-  var p = pacientes.filter(function(x) { return x.id === id; })[0];
-  if (!p) return;
+// ── EXPEDIENTE ──
+function abrirExpediente(id){
+  pacienteId=id; goPage('expediente');
+  var p=pacientes.filter(function(x){return x.id===id;})[0]; if(!p) return;
+  var sc=p.sexo==='Masculino'?'m':p.sexo==='Femenino'?'f':'o';
+  var colors={m:'var(--blue)',f:'var(--purple)',o:'var(--green)'};
+  var ec={Activo:'green','En seguimiento':'blue',Alta:'gray',Inactivo:'gray'}[p.estado]||'gray';
+  var tc={Miembro:'green',Visita:'blue',Bautizado:'amber'}[p.tipoMiembro]||'gray';
+  var canAdd=currentUser.rol==='admin'||currentUser.rol==='doctor';
 
-  var sc = p.sexo==='Masculino'?'m':p.sexo==='Femenino'?'f':'o';
-  var ini = initials(p.nombre);
-  var colors = {m:'var(--blue)',f:'var(--purple)',o:'var(--green)'};
-  var estadoClass = {Activo:'green','En seguimiento':'blue',Alta:'gray',Inactivo:'gray'}[p.estado]||'gray';
-  var tmClass = {Miembro:'green',Visita:'blue',Bautizado:'amber'}[p.tipoMiembro]||'gray';
-  var canAdd = currentUser.rol === 'admin' || currentUser.rol === 'doctor';
+  $('exp-contenido').innerHTML=
+    '<div class="print-header"><h2>ClinicaApp — Expediente Clínico</h2><p>Impreso: '+new Date().toLocaleString('es-MX')+'</p></div>'
+    +'<div class="exp-header">'
+    +'<div class="avatar lg" style="background:'+colors[sc]+'">'+initials(p.nombre)+'</div>'
+    +'<div style="flex:1">'
+    +'<div class="exp-name">'+p.nombre+'</div>'
+    +'<div class="exp-meta">'
+    +(p.edad?'<span class="pill gray">'+p.edad+'</span>':'')
+    +(p.sangre?'<span class="pill blue">'+p.sangre+'</span>':'')
+    +'<span class="pill '+ec+'">'+p.estado+'</span>'
+    +(p.tipoMiembro?'<span class="pill '+tc+'">'+p.tipoMiembro+'</span>':'')
+    +'</div>'
+    +'<div style="font-size:13px;color:var(--text2)">'
+    +(p.cedula?'<strong>ID:</strong> '+p.cedula:'')
+    +(p.telefono?' &nbsp;·&nbsp; '+p.telefono:'')
+    +(p.email?' &nbsp;·&nbsp; '+p.email:'')
+    +'</div>'
+    +(p.antecedentes?'<div style="font-size:13px;color:var(--text2);margin-top:6px"><strong>Antecedentes:</strong> '+p.antecedentes+'</div>':'')
+    +(p.medicamentos?'<div style="font-size:13px;color:var(--text2);margin-top:2px"><strong>Medicamentos:</strong> '+p.medicamentos+'</div>':'')
+    +(p.alergias?'<div class="exp-alerta">⚠ <strong>Alergias:</strong> '+p.alergias+'</div>':'')
+    +'</div></div>'
+    +'<div class="ent-header"><h3>Historial Clínico</h3>'
+    +'<div class="ent-actions">'
+    +(canAdd?'<button class="btn sm" id="btn-nueva-entrada">+ Entrada</button>':'')
+    +(canAdd?'<button class="btn green" id="btn-agendar-cita">📅 Agendar cita</button>':'')
+    +'</div></div>'
+    +'<div id="lista-entradas"><div class="loading">Cargando historial...</div></div>';
 
-  $('exp-contenido').innerHTML =
-    '<div class="exp-header">'
-    + '<div class="avatar lg" style="background:'+colors[sc]+'">'+ini+'</div>'
-    + '<div style="flex:1">'
-    + '<div class="exp-name">'+p.nombre+'</div>'
-    + '<div class="exp-meta">'
-    + (p.edad?'<span class="pill gray">'+p.edad+'</span>':'')
-    + (p.sangre?'<span class="pill blue">'+p.sangre+'</span>':'')
-    + '<span class="pill '+estadoClass+'">'+p.estado+'</span>'
-    + (p.tipoMiembro?'<span class="pill '+tmClass+'">'+p.tipoMiembro+'</span>':'')
-    + '</div>'
-    + '<div style="font-size:13px;color:var(--text2)">'
-    + (p.cedula?'<strong>ID:</strong> '+p.cedula:'')
-    + (p.telefono?' &nbsp;·&nbsp; '+p.telefono:'')
-    + '</div>'
-    + (p.antecedentes?'<div style="font-size:13px;color:var(--text2);margin-top:6px"><strong>Antecedentes:</strong> '+p.antecedentes+'</div>':'')
-    + (p.medicamentos?'<div style="font-size:13px;color:var(--text2);margin-top:2px"><strong>Medicamentos:</strong> '+p.medicamentos+'</div>':'')
-    + (p.alergias?'<div class="exp-alerta">⚠ <strong>Alergias:</strong> '+p.alergias+'</div>':'')
-    + '</div></div>'
-    + '<div class="ent-header"><h3>Historial Clínico</h3>'
-    + (canAdd?'<button class="btn sm" id="btn-nueva-entrada">+ Añadir entrada</button>':'')
-    + '</div>'
-    + '<div id="lista-entradas"><div class="loading">Cargando historial...</div></div>';
-
-  if (canAdd) {
-    $('btn-nueva-entrada').addEventListener('click', abrirModal);
+  if(canAdd){
+    $('btn-nueva-entrada').addEventListener('click', abrirModalEntrada);
+    $('btn-agendar-cita').addEventListener('click', function(){ abrirModalCita(p); });
   }
 
-  api({ action:'getEntradas', pacienteId:id })
-    .then(function(data) {
-      renderEntradas((data.entradas||[]).reverse());
-    })
-    .catch(function() {
-      $('lista-entradas').innerHTML = '<div class="loading">⚠ No se pudo cargar el historial</div>';
-    });
+  api({action:'getEntradas',pacienteId:id}).then(function(d){
+    renderEntradas((d.entradas||[]).reverse());
+  }).catch(function(){
+    $('lista-entradas').innerHTML='<div class="loading">⚠ No se pudo cargar el historial</div>';
+  });
 }
 
-function renderEntradas(lista) {
-  var el = $('lista-entradas');
-  if (!lista.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>Sin entradas clínicas aún</p></div>';
+function renderEntradas(lista){
+  var el=$('lista-entradas');
+  if(!lista.length){el.innerHTML='<div class="empty"><div class="empty-icon">📋</div><p>Sin entradas clínicas aún</p></div>';return;}
+  el.innerHTML=lista.map(function(e){
+    var pc={Normal:'gray',Importante:'amber',Urgente:'red'}[e.prioridad]||'gray';
+    return '<div class="entrada '+(e.prioridad||'Normal')+'">'
+      +'<div class="ent-meta">'
+      +'<div class="avatar xs">'+initials(e.medico)+'</div>'
+      +'<div><div class="ent-doctor">'+(e.medico||'—')+'</div><div class="ent-fecha">'+(e.especialidad||'')+'</div></div>'
+      +'<span class="pill blue">'+(e.tipo||'')+'</span>'
+      +'<span class="pill '+pc+'">'+(e.prioridad||'Normal')+'</span>'
+      +'<span class="ent-fecha" style="margin-left:auto">'+(e.fecha||'')+'</span>'
+      +'</div>'
+      +'<div class="ent-texto">'+(e.texto||'')+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+// ── IMPRIMIR ──
+function imprimirExpediente(){ window.print(); }
+
+// ── MODAL ENTRADA ──
+function abrirModalEntrada(){
+  setVal('e-texto',''); setVal('e-tipo','Consulta general'); setVal('e-prioridad','Normal');
+  hide('modal-ent-err'); show('modal-entrada');
+}
+function cerrarModalEntrada(){ hide('modal-entrada'); }
+$('btn-cerrar-entrada').addEventListener('click', cerrarModalEntrada);
+$('btn-cancelar-entrada').addEventListener('click', cerrarModalEntrada);
+$('modal-entrada').addEventListener('click', function(e){if(e.target===this) cerrarModalEntrada();});
+
+$('btn-guardar-entrada').addEventListener('click', function(){
+  var texto=val('e-texto').trim();
+  if(!texto){showModalErr('modal-ent-err','Las observaciones son obligatorias');return;}
+  api({action:'addEntrada',pacienteId:pacienteId,tipo:val('e-tipo'),prioridad:val('e-prioridad'),
+    texto:texto,medico:currentUser.nombre,especialidad:currentUser.especialidad||'',
+    fecha:new Date().toLocaleString('es-MX')})
+  .then(function(){
+    cerrarModalEntrada();
+    return api({action:'getEntradas',pacienteId:pacienteId});
+  }).then(function(d){renderEntradas((d.entradas||[]).reverse());})
+  .catch(function(err){showModalErr('modal-ent-err','Error: '+err.message);});
+});
+
+// ── MODAL CITA ──
+function abrirModalCita(p){
+  // Poblar select de doctores
+  var sel=$('c-doctor');
+  sel.innerHTML='';
+  var docs=getUsers().filter(function(u){return u.rol==='doctor'||u.rol==='admin';});
+  docs.forEach(function(u){
+    var opt=document.createElement('option');
+    opt.value=u.user; opt.textContent=u.nombre+(u.especialidad?' ('+u.especialidad+')':'');
+    sel.appendChild(opt);
+  });
+  // Fecha default hoy
+  var hoy=new Date(); var mm=String(hoy.getMonth()+1).padStart(2,'0'); var dd=String(hoy.getDate()).padStart(2,'0');
+  setVal('c-fecha',hoy.getFullYear()+'-'+mm+'-'+dd);
+  setVal('c-hora','09:00'); setVal('c-motivo',''); setVal('c-notas','');
+  hide('modal-cita-err');
+  show('modal-cita');
+}
+function cerrarModalCita(){ hide('modal-cita'); }
+$('btn-cerrar-cita').addEventListener('click', cerrarModalCita);
+$('btn-cancelar-cita').addEventListener('click', cerrarModalCita);
+$('modal-cita').addEventListener('click', function(e){if(e.target===this) cerrarModalCita();});
+
+$('btn-guardar-cita').addEventListener('click', function(){
+  if(!val('c-doctor')||!val('c-fecha')||!val('c-hora')){
+    showModalErr('modal-cita-err','Selecciona doctor, fecha y hora'); return;
+  }
+  var p=pacientes.filter(function(x){return x.id===pacienteId;})[0];
+  var docUser=val('c-doctor');
+  var docObj=getUsers().filter(function(u){return u.user===docUser;})[0];
+  api({
+    action:'addCita', pacienteId:pacienteId, pacienteNombre:p?p.nombre:'',
+    doctorUser:docUser, doctorNombre:docObj?docObj.nombre:docUser,
+    fecha:val('c-fecha'), hora:val('c-hora'), motivo:val('c-motivo'),
+    notas:val('c-notas'), estado:'Pendiente',
+    creadaPor:currentUser.nombre, fechaCreacion:new Date().toLocaleString('es-MX')
+  }).then(function(r){
+    if(r.ok){ cerrarModalCita(); actualizarBadgeCitas(); alert('Cita agendada correctamente para '+val('c-fecha')+' a las '+val('c-hora')); }
+    else showModalErr('modal-cita-err',r.error||'Error al guardar');
+  }).catch(function(err){showModalErr('modal-cita-err','Error: '+err.message);});
+});
+
+function showModalErr(id,msg){ var el=$(id); el.textContent=msg; show(el.id||id); }
+
+// ── CITAS ──
+function cargarCitas(){
+  $('lista-citas').innerHTML='<div class="loading">Cargando citas...</div>';
+  var filtroFecha=val('filtro-fecha-citas');
+  var params={action:'getCitas'};
+  if(currentUser.rol==='doctor') params.doctorUser=currentUser.user;
+  if(filtroFecha) params.fecha=filtroFecha;
+  api(params).then(function(d){
+    renderCitas(d.citas||[]);
+    actualizarBadgeCitas();
+  }).catch(function(err){
+    $('lista-citas').innerHTML='<div class="loading">⚠ Error: '+err.message+'</div>';
+  });
+}
+
+function renderCitas(lista){
+  var el=$('lista-citas');
+  if(!lista.length){
+    el.innerHTML='<div class="empty"><div class="empty-icon">📅</div><p>No hay citas para mostrar</p></div>';
     return;
   }
-  el.innerHTML = lista.map(function(e) {
-    var ppClass = {Normal:'gray',Importante:'amber',Urgente:'red'}[e.prioridad]||'gray';
-    return '<div class="entrada '+(e.prioridad||'Normal')+'">'
-      + '<div class="ent-meta">'
-      + '<div class="avatar xs">'+initials(e.medico)+'</div>'
-      + '<div><div class="ent-doctor">'+(e.medico||'—')+'</div><div class="ent-fecha">'+(e.especialidad||'')+'</div></div>'
-      + '<span class="pill blue">'+(e.tipo||'')+'</span>'
-      + '<span class="pill '+ppClass+'">'+(e.prioridad||'Normal')+'</span>'
-      + '<span class="ent-fecha" style="margin-left:auto">'+(e.fecha||'')+'</span>'
-      + '</div>'
-      + '<div class="ent-texto">'+(e.texto||'')+'</div>'
-      + '</div>';
+  // Ordenar por fecha y hora
+  lista.sort(function(a,b){
+    var da=a.fecha+' '+a.hora; var db=b.fecha+' '+b.hora;
+    return da<db?-1:da>db?1:0;
+  });
+  el.innerHTML=lista.map(function(c,i){
+    var ec={Pendiente:'blue',Completada:'green',Cancelada:'red'}[c.estado]||'gray';
+    return '<div class="cita-row">'
+      +'<div class="cita-num">'+(i+1)+'</div>'
+      +'<div class="cita-info">'
+      +'<div class="cita-nombre">'+c.pacienteNombre+'</div>'
+      +'<div class="cita-detalle">'
+      +(c.doctorNombre?'👨‍⚕️ '+c.doctorNombre+' &nbsp;·&nbsp; ':'')
+      +(c.motivo?c.motivo:'Sin motivo especificado')
+      +'</div>'
+      +(c.notas?'<div style="font-size:12px;color:var(--text3);margin-top:2px">'+c.notas+'</div>':'')
+      +'</div>'
+      +'<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">'
+      +'<span class="cita-hora">'+c.fecha+' '+c.hora+'</span>'
+      +'<span class="pill '+ec+'">'+c.estado+'</span>'
+      +'</div>'
+      +'</div>';
   }).join('');
 }
 
-// ══════════════════════════════════════════
-//  MODAL ENTRADA
-// ══════════════════════════════════════════
-function abrirModal() {
-  setVal('e-texto','');
-  setVal('e-tipo','Consulta general');
-  setVal('e-prioridad','Normal');
-  hide('modal-err');
-  show('modal-overlay');
+function actualizarBadgeCitas(){
+  api({action:'getCitas',doctorUser:currentUser.user,solo_pendientes:'1'}).then(function(d){
+    var n=(d.citas||[]).length;
+    var badge=$('badge-citas');
+    if(n>0){ badge.textContent=n; show('badge-citas'); }
+    else hide('badge-citas');
+  }).catch(function(){});
 }
-function cerrarModal() { hide('modal-overlay'); }
 
-$('btn-cerrar-modal').addEventListener('click', cerrarModal);
-$('btn-cancelar-modal').addEventListener('click', cerrarModal);
-$('modal-overlay').addEventListener('click', function(e) { if(e.target===this) cerrarModal(); });
+var hoy2=new Date(); var mm2=String(hoy2.getMonth()+1).padStart(2,'0'); var dd2=String(hoy2.getDate()).padStart(2,'0');
+$('filtro-fecha-citas').value=hoy2.getFullYear()+'-'+mm2+'-'+dd2;
+$('filtro-fecha-citas').addEventListener('change', cargarCitas);
+$('btn-todas-citas').addEventListener('click', function(){ setVal('filtro-fecha-citas',''); cargarCitas(); });
 
-$('btn-guardar-entrada').addEventListener('click', function() {
-  var texto = val('e-texto').trim();
-  if (!texto) { showMsg('modal-err','Las observaciones son obligatorias',true); return; }
-  api({
-    action:'addEntrada', pacienteId:pacienteId,
-    tipo:val('e-tipo'), prioridad:val('e-prioridad'), texto:texto,
-    medico:currentUser.nombre, especialidad:currentUser.especialidad||'',
-    fecha:new Date().toLocaleString('es-MX')
-  }).then(function() {
-    cerrarModal();
-    return api({ action:'getEntradas', pacienteId:pacienteId });
-  }).then(function(data) {
-    renderEntradas((data.entradas||[]).reverse());
-  }).catch(function(err) { showMsg('modal-err','Error: '+err.message,true); });
-});
-
-// ══════════════════════════════════════════
-//  USUARIOS
-// ══════════════════════════════════════════
-function renderUsuarios() {
-  var roles = {admin:'Administrador',doctor:'Médico',recepcion:'Recepción'};
-  $('tbl-usuarios').innerHTML = getUsers().map(function(u) {
+// ── USUARIOS ──
+function renderUsuarios(){
+  var roles={admin:'Administrador',doctor:'Médico',recepcion:'Recepción'};
+  $('tbl-usuarios').innerHTML=getUsers().map(function(u){
     return '<tr><td><strong>'+u.nombre+'</strong></td>'
-      + '<td><code style="font-size:13px;color:var(--text3)">'+u.user+'</code></td>'
-      + '<td><span class="pill blue">'+(roles[u.rol]||u.rol)+'</span></td>'
-      + '<td>'+(u.especialidad||'—')+'</td></tr>';
+      +'<td><code style="font-size:13px;color:var(--text3)">'+u.user+'</code></td>'
+      +'<td><span class="pill blue">'+(roles[u.rol]||u.rol)+'</span></td>'
+      +'<td>'+(u.especialidad||'—')+'</td></tr>';
   }).join('');
 }
 
-$('btn-add-user').addEventListener('click', function() {
-  var n = val('u-nombre').trim();
-  var u = val('u-user').trim();
-  var p = val('u-pass').trim();
-  var r = val('u-rol');
-  var e = val('u-esp').trim();
-  if (!n||!u||!p) { alert('Completa nombre, usuario y contraseña'); return; }
-  var users = getUsers();
-  if (users.filter(function(x){return x.user===u;}).length) { alert('Ese usuario ya existe'); return; }
-  // Guardar en Sheets
-  api({ action:'addUsuario', nombre:n, user:u, pass:p, rol:r, especialidad:e||'' })
-    .then(function(res) {
-      if (res.ok) {
-        // Actualizar caché local
-        usersCache = users.concat([{nombre:n,user:u,pass:p,rol:r,especialidad:e}]);
+$('btn-add-user').addEventListener('click', function(){
+  var n=val('u-nombre').trim(), u=val('u-user').trim(), p=val('u-pass').trim();
+  var r=val('u-rol'), e=val('u-esp').trim();
+  if(!n||!u||!p){alert('Completa nombre, usuario y contraseña');return;}
+  if(getUsers().filter(function(x){return x.user===u;}).length){alert('Ese usuario ya existe');return;}
+  api({action:'addUsuario',nombre:n,user:u,pass:p,rol:r,especialidad:e||''})
+    .then(function(res){
+      if(res.ok){
+        usersCache=(usersCache||[]).concat([{nombre:n,user:u,pass:p,rol:r,especialidad:e}]);
         renderUsuarios();
         ['u-nombre','u-user','u-pass','u-esp'].forEach(function(id){setVal(id,'');});
-      } else {
-        alert('Error al guardar usuario: ' + (res.error||'desconocido'));
-      }
-    })
-    .catch(function(err) { alert('Error de conexión: ' + err.message); });
+      } else alert('Error: '+(res.error||'desconocido'));
+    }).catch(function(err){alert('Error de conexión: '+err.message);});
 });
 </script>
 </body>
