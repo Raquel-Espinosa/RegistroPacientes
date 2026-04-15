@@ -774,6 +774,29 @@ G('btn-guar-ent').addEventListener('click', function(){
   .catch(function(err){ showErr('ent-err','Error: '+err.message); });
 });
 
+function fmtHora(h) {
+  if (!h) return '';
+  // Si viene como fecha larga (ej: "Sat Dec 30 1899 11:01:00")
+  if (h.length > 5) {
+    var d = new Date(h);
+    if (!isNaN(d.getTime())) {
+      return (d.getHours()<10?'0':'')+d.getHours()+':'+(d.getMinutes()<10?'0':'')+d.getMinutes();
+    }
+    // Extraer HH:MM de cualquier string
+    var m = h.match(/(\d{1,2}):(\d{2})/);
+    return m ? (m[1].padStart(2,'0')+':'+m[2]) : h;
+  }
+  return h;
+}
+function fmtFecha(f) {
+  if (!f) return '';
+  // YYYY-MM-DD -> DD/MM/YYYY
+  if (/^\d{4}-\d{2}-\d{2}$/.test(f)) {
+    var p = f.split('-');
+    return p[2]+'/'+p[1]+'/'+p[0];
+  }
+  return f;
+}
 function cargarCitas(){
   show('msg-cit'); G('msg-cit').textContent='Cargando citas...';
   hide('vac-cit'); G('grid-cit').innerHTML='';
@@ -813,8 +836,8 @@ function renderCitas(fil){
       '<div class="cpac">'+(c.pacienteNombre||'')+'</div>'+
       '<div class="cdoc">'+(c.doctorNombre||'')+'</div></div>'+
       '<div style="text-align:right">'+
-      '<div class="cfec">'+(c.fecha||'')+'</div>'+
-      '<div class="chor">'+(c.hora||'')+'</div>'+
+      '<div class="cfec">'+fmtFecha(c.fecha)+'</div>'+
+      '<div class="chor">'+fmtHora(c.hora)+'</div>'+
       '</div></div>'+
       (c.motivo?'<div class="cmot">'+(c.motivo||'')+'</div>':'')+
       acc+'</div>';
