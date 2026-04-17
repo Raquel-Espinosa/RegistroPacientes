@@ -776,24 +776,28 @@ G('btn-guar-ent').addEventListener('click', function(){
 
 function fmtHora(h) {
   if (!h) return '';
-  // Si viene como fecha larga (ej: "Sat Dec 30 1899 11:01:00")
-  if (h.length > 5) {
-    var d = new Date(h);
-    if (!isNaN(d.getTime())) {
-      return (d.getHours()<10?'0':'')+d.getHours()+':'+(d.getMinutes()<10?'0':'')+d.getMinutes();
-    }
-    // Extraer HH:MM de cualquier string
-    var m = h.match(/(\d{1,2}):(\d{2})/);
-    return m ? (m[1].padStart(2,'0')+':'+m[2]) : h;
+  // Si ya es HH:MM (5 chars o menos) devolver directo
+  if (h.length <= 5 && h.indexOf(':') > -1) return h;
+  // Parsear como Date (cubre "Sat Dec 30 1899...", ISO, etc.)
+  var d = new Date(h);
+  if (!isNaN(d.getTime())) {
+    var hh = d.getHours();
+    var mm = d.getMinutes();
+    return (hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;
   }
-  return h;
+  // Buscar patron HH:MM dentro del string
+  var m = h.match(/(\d{1,2}):(\d{2})/);
+  return m ? ((m[1].length<2?'0':'')+m[1]+':'+m[2]) : h;
 }
 function fmtFecha(f) {
   if (!f) return '';
-  // YYYY-MM-DD -> DD/MM/YYYY
-  if (/^\d{4}-\d{2}-\d{2}$/.test(f)) {
-    var p = f.split('-');
-    return p[2]+'/'+p[1]+'/'+p[0];
+  // Intentar parsear cualquier formato de fecha como objeto Date
+  var d = new Date(f);
+  if (!isNaN(d.getTime())) {
+    var dd = d.getDate();
+    var mm = d.getMonth() + 1;
+    var yy = d.getFullYear();
+    return (dd<10?'0':'')+dd+'/'+(mm<10?'0':'')+mm+'/'+yy;
   }
   return f;
 }
