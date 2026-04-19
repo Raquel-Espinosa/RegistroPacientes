@@ -652,6 +652,8 @@ G('fnac').addEventListener('change', function(){
 });
 
 G('btn-guar-pac').addEventListener('click', function(){
+  var btn=G('btn-guar-pac');
+  if(btn.disabled) return;
   var reqs=['fn','fnac','fsx','fid'], ok=true;
   reqs.forEach(function(id){
     var el=G(id);
@@ -659,6 +661,7 @@ G('btn-guar-pac').addEventListener('click', function(){
     else el.style.borderColor='';
   });
   if(!ok){showErr('ferr','Completa los campos obligatorios (*)');return;}
+  btn.disabled=true; btn.textContent='Guardando...';
   var pid='P-'+Date.now().toString(36).toUpperCase();
   hide('ferr');
   api({action:'addPaciente',id:pid,nombre:V('fn'),nacimiento:V('fnac'),edad:V('fed'),
@@ -667,11 +670,15 @@ G('btn-guar-pac').addEventListener('click', function(){
     tipoMiembro:V('ftm'),alergias:V('fal'),antecedentes:V('fant'),
     medicamentos:V('fmed'),fechaRegistro:new Date().toLocaleString('es-MX')})
   .then(function(r){
+    btn.disabled=false; btn.textContent='Registrar Paciente';
     if(r.ok){
       show('fok');
       setTimeout(function(){ hide('fok'); limpiarForm(); cargarPacientes(); goPage('pacientes'); }, 1500);
     } else showErr('ferr',r.error||'Error al guardar');
-  }).catch(function(err){ showErr('ferr','Error: '+err.message); });
+  }).catch(function(err){
+    btn.disabled=false; btn.textContent='Registrar Paciente';
+    showErr('ferr','Error: '+err.message);
+  });
 });
 
 function limpiarForm(){
@@ -751,13 +758,17 @@ G('btn-canc-ent').addEventListener('click', function(){ hide('ov-entrada'); CITA
 G('ov-entrada').addEventListener('click', function(e){ if(e.target===this){hide('ov-entrada');CITA_ACTIVA=null;} });
 
 G('btn-guar-ent').addEventListener('click', function(){
+  var btn=G('btn-guar-ent');
+  if(btn.disabled) return;
   var txt = V('e-txt').trim();
   if(!txt){showErr('ent-err','Las observaciones son obligatorias');return;}
+  btn.disabled=true; btn.textContent='Guardando...';
   var pid = PAC_ID;
   api({action:'addEntrada',pacienteId:pid,tipo:V('e-tipo'),prioridad:V('e-prio'),
     texto:txt,medico:CU.nombre,especialidad:CU.especialidad||'',
     fecha:new Date().toLocaleString('es-MX')})
   .then(function(){
+    btn.disabled=false; btn.textContent='Guardar Entrada';
     if(CITA_ACTIVA){
       return api({action:'updateCita',id:CITA_ACTIVA.id,estado:'completada'})
         .then(function(){
@@ -771,7 +782,10 @@ G('btn-guar-ent').addEventListener('click', function(){
     return api({action:'getEntradas',pacienteId:pid});
   })
   .then(function(d){ if(d&&d.entradas) renderEntradas(d.entradas.reverse()); })
-  .catch(function(err){ showErr('ent-err','Error: '+err.message); });
+  .catch(function(err){
+    btn.disabled=false; btn.textContent='Guardar Entrada';
+    showErr('ent-err','Error: '+err.message);
+  });
 });
 
 function fmtHora(h) {
@@ -887,8 +901,11 @@ G('btn-canc-cit').addEventListener('click', function(){ hide('ov-cita'); });
 G('ov-cita').addEventListener('click', function(e){ if(e.target===this) hide('ov-cita'); });
 
 G('btn-guar-cit').addEventListener('click', function(){
+  var btn=G('btn-guar-cit');
+  if(btn.disabled) return;
   var pv=V('c-pac'), dv=V('c-doc'), fv=V('c-fec'), hv=V('c-hor');
   if(!pv||!dv||!fv||!hv){showErr('cit-err','Completa todos los campos obligatorios');return;}
+  btn.disabled=true; btn.textContent='Agendando...';
   var pa=pv.split('|'), da=dv.split('|');
   api({action:'addCita',id:'C-'+Date.now().toString(36).toUpperCase(),
     pacienteId:pa[0],pacienteNombre:pa[1]||'',
@@ -896,9 +913,13 @@ G('btn-guar-cit').addEventListener('click', function(){
     fecha:fv,hora:hv,motivo:V('c-mot'),estado:'pendiente',
     creadoPor:CU.user,fechaRegistro:new Date().toLocaleString('es-MX')})
   .then(function(r){
+    btn.disabled=false; btn.textContent='Agendar Cita';
     if(r.ok){hide('ov-cita');cargarCitas();}
     else showErr('cit-err',r.error||'Error al guardar');
-  }).catch(function(err){showErr('cit-err','Error: '+err.message);});
+  }).catch(function(err){
+    btn.disabled=false; btn.textContent='Agendar Cita';
+    showErr('cit-err','Error: '+err.message);
+  });
 });
 
 function renderUsuarios(){
@@ -913,17 +934,24 @@ function renderUsuarios(){
 }
 
 G('btn-add-usr').addEventListener('click', function(){
+  var btn=G('btn-add-usr');
+  if(btn.disabled) return;
   var n=V('un').trim(), u=V('uu').trim(), p=V('up').trim(), r=V('ur'), e=V('ue').trim();
   if(!n||!u||!p){alert('Completa nombre, usuario y contrasena');return;}
   var users=getUsers();
   for(var i=0;i<users.length;i++){if(users[i].user===u){alert('Ese usuario ya existe');return;}}
+  btn.disabled=true; btn.textContent='Guardando...';
   api({action:'addUsuario',nombre:n,user:u,pass:p,rol:r,especialidad:e||''}).then(function(r2){
+    btn.disabled=false; btn.textContent='Anadir Usuario';
     if(r2.ok){
       USERS_CACHE=users.concat([{nombre:n,user:u,pass:p,rol:r,especialidad:e}]);
       renderUsuarios();
       ['un','uu','up','ue'].forEach(function(id){SV(id,'');});
     } else alert('Error: '+(r2.error||'desconocido'));
-  }).catch(function(err){alert('Error: '+err.message);});
+  }).catch(function(err){
+    btn.disabled=false; btn.textContent='Anadir Usuario';
+    alert('Error: '+err.message);
+  });
 });
 
 function showErr(id,msg){
@@ -970,10 +998,13 @@ G('ep-nac').addEventListener('change', function(){
 });
 
 G('btn-guar-edit').addEventListener('click', function(){
+  var btn=G('btn-guar-edit');
+  if(btn.disabled) return;
   var id = V('ep-id');
   if(!V('ep-nombre').trim()||!V('ep-cedula').trim()){
     showErr('ep-err','Nombre e identificacion son obligatorios'); return;
   }
+  btn.disabled=true; btn.textContent='Guardando...';
   api({action:'updatePaciente', id:id,
     nombre:V('ep-nombre'), nacimiento:V('ep-nac'), edad:V('ep-edad'),
     sexo:V('ep-sexo'), cedula:V('ep-cedula'), telefono:V('ep-tel'),
@@ -981,13 +1012,16 @@ G('btn-guar-edit').addEventListener('click', function(){
     sangre:V('ep-sgr'), estado:V('ep-est'), tipoMiembro:V('ep-tm'),
     alergias:V('ep-al'), antecedentes:V('ep-ant'), medicamentos:V('ep-med')
   }).then(function(r){
+    btn.disabled=false; btn.textContent='Guardar Cambios';
     if(r.ok){
       hide('ov-edit');
       cargarPacientes();
-      // Refresh expediente view
       setTimeout(function(){ abrirExp(id); }, 600);
     } else showErr('ep-err', r.error||'Error al guardar');
-  }).catch(function(err){ showErr('ep-err','Error: '+err.message); });
+  }).catch(function(err){
+    btn.disabled=false; btn.textContent='Guardar Cambios';
+    showErr('ep-err','Error: '+err.message);
+  });
 });
 
 // ══════════════════════════════════════════
